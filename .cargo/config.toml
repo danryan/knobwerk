@@ -1,0 +1,25 @@
+# Per-target configuration. We deliberately do NOT set [build] target here:
+# per-package targets are not yet stable, and forcing the workspace target to
+# thumbv8m.main-none-eabihf would break the desktop crate.
+#
+# Build commands:
+#   Desktop : cargo run -p desktop
+#   MCU     : cargo run -p mcu --target thumbv8m.main-none-eabihf --release
+#
+# probe-rs >= 0.27.0 (Jan 2025) ships RP235x flashing support. The chip name is
+# the family-level ID and covers RP2350A and RP2350B.
+#
+# Fallback if probe-rs cannot detect a particular Pico-as-debugprobe setup:
+#   1. Build:    cargo build -p mcu --target thumbv8m.main-none-eabihf --release
+#   2. Convert:  picotool uf2 convert -t elf target/thumbv8m.main-none-eabihf/release/mcu mcu.uf2
+#   3. Flash:    hold BOOTSEL, plug in Pico 2 W, copy mcu.uf2 to RPI-RP2 mass storage.
+# The official Raspberry Pi Debug Probe with current firmware is the most
+# reliable connection.
+
+[target.thumbv8m.main-none-eabihf]
+runner = "probe-rs run --chip RP235x"
+rustflags = [
+    "-C", "link-arg=--nmagic",
+    "-C", "link-arg=-Tlink.x",
+    "-C", "link-arg=-Tdefmt.x",
+]

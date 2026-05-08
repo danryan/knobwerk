@@ -1,0 +1,37 @@
+[workspace]
+resolver = "3"
+members = ["ui", "desktop", "mcu"]
+default-members = ["ui", "desktop"]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+slint        = { version = "1.16" }
+slint-build  = "1.16"
+cpal         = "0.17"
+
+embassy-rp       = { version = "0.10", features = ["rp235xa", "time-driver", "critical-section-impl", "defmt", "binary-info"] }
+embassy-executor = { version = "0.10", features = ["platform-cortex-m", "executor-thread", "defmt"] }
+embassy-time     = { version = "0.5",  features = ["defmt", "defmt-timestamp-uptime"] }
+
+cortex-m       = "0.7.7"
+cortex-m-rt    = "0.7.5"
+embedded-alloc = "0.7"
+embedded-hal   = "1"
+defmt          = "1"
+defmt-rtt      = "1"
+panic-probe    = { version = "1", features = ["print-defmt"] }
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+debug = 2
+overflow-checks = false
+
+[profile.dev]
+opt-level = 1
+debug = 2

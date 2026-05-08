@@ -1,0 +1,31 @@
+[package]
+name = "ui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+slint = { workspace = true, default-features = false }
+
+[build-dependencies]
+slint-build = { workspace = true }
+
+[features]
+default = ["std"]
+
+# Desktop build: Slint with all default features (winit, software/skia
+# renderers, std, etc.).
+std = ["slint/std", "slint/backend-default", "slint/renderer-software", "slint/compat-1-2"]
+
+# MCU / no_std build: software renderer only, single-threaded, libm for math,
+# and the Slint 1.x compatibility guard. There is no `compat-1-16`; `compat-1-2`
+# is the frozen compatibility baseline for the entire Slint 1.x series.
+mcu = [
+    "slint/compat-1-2",
+    "slint/unsafe-single-threaded",
+    "slint/libm",
+    "slint/renderer-software",
+]

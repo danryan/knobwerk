@@ -1,0 +1,14 @@
+[package]
+name = "desktop"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "knobwerk"
+path = "src/main.rs"
+
+[dependencies]
+ui   = { path = "../ui", default-features = true, features = ["std"] }
+slint = { workspace = true }
+cpal  = { workspace = true }

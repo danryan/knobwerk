@@ -1,0 +1,31 @@
+[package]
+name = "mcu"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "mcu"
+path = "src/main.rs"
+
+[dependencies]
+ui = { path = "../ui", default-features = false, features = ["mcu"] }
+
+slint = { workspace = true, default-features = false, features = [
+    "compat-1-2",
+    "unsafe-single-threaded",
+    "libm",
+    "renderer-software",
+] }
+
+embassy-rp       = { workspace = true }
+embassy-executor = { workspace = true }
+embassy-time     = { workspace = true }
+
+cortex-m       = { workspace = true }
+cortex-m-rt    = { workspace = true }
+embedded-alloc = { workspace = true }
+embedded-hal   = { workspace = true }
+defmt          = { workspace = true }
+defmt-rtt      = { workspace = true }
+panic-probe    = { workspace = true }

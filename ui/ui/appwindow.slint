@@ -1,0 +1,91 @@
+import { Slider, Switch, VerticalBox, HorizontalBox } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    width: 320px;
+    height: 240px;
+    title: "knobwerk";
+    background: #101418;
+
+    in-out property <float> gain: 0.5;
+    in-out property <float> delay: 0.25;
+    in-out property <float> reverb: 0.3;
+    in-out property <bool> bypass: false;
+
+    callback param-changed(string, float);
+    callback bypass-changed(bool);
+
+    VerticalBox {
+        spacing: 8px;
+        padding: 12px;
+
+        Text {
+            text: "knobwerk";
+            font-size: 20px;
+            font-weight: 700;
+            color: #e8eef2;
+            horizontal-alignment: center;
+        }
+
+        HorizontalBox {
+            spacing: 8px;
+            Text {
+                text: "Gain";
+                color: #cfd6dc;
+                width: 64px;
+                vertical-alignment: center;
+            }
+            gain-slider := Slider {
+                minimum: 0;
+                maximum: 1;
+                value <=> root.gain;
+                released(v) => { root.param-changed("gain", v); }
+            }
+        }
+
+        HorizontalBox {
+            spacing: 8px;
+            Text {
+                text: "Delay";
+                color: #cfd6dc;
+                width: 64px;
+                vertical-alignment: center;
+            }
+            delay-slider := Slider {
+                minimum: 0;
+                maximum: 1;
+                value <=> root.delay;
+                released(v) => { root.param-changed("delay", v); }
+            }
+        }
+
+        HorizontalBox {
+            spacing: 8px;
+            Text {
+                text: "Reverb";
+                color: #cfd6dc;
+                width: 64px;
+                vertical-alignment: center;
+            }
+            reverb-slider := Slider {
+                minimum: 0;
+                maximum: 1;
+                value <=> root.reverb;
+                released(v) => { root.param-changed("reverb", v); }
+            }
+        }
+
+        HorizontalBox {
+            spacing: 8px;
+            Text {
+                text: "Bypass";
+                color: #cfd6dc;
+                width: 64px;
+                vertical-alignment: center;
+            }
+            bypass-switch := Switch {
+                checked <=> root.bypass;
+                toggled => { root.bypass-changed(self.checked); }
+            }
+        }
+    }
+}
