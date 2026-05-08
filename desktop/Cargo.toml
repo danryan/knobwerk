@@ -10,5 +10,5 @@ path = "src/main.rs"
 
 [dependencies]
 ui   = { path = "../ui", default-features = true, features = ["std"] }
-slint = { workspace = true }
+slint = { workspace = true, features = ["std", "backend-default", "renderer-software", "compat-1-2"] }
 cpal  = { workspace = true }

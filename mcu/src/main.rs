@@ -23,7 +23,7 @@ use slint::platform::software_renderer::{
     LineBufferProvider, MinimalSoftwareWindow, RepaintBufferType, Rgb565Pixel,
 };
 use slint::platform::{Platform, PlatformError, WindowAdapter};
-use slint::{ComponentHandle, PhysicalSize};
+use slint::PhysicalSize;
 
 use ui::AppWindow;
 
@@ -228,7 +228,7 @@ async fn main(spawner: Spawner) {
         line:    [Rgb565Pixel(0); DISPLAY_W as usize],
     });
 
-    spawner.spawn(dsp_logger()).expect("spawn dsp_logger");
+    spawner.spawn(dsp_logger().expect("dsp_logger spawn token"));
 
     // 6) Super-loop render. We deliberately do NOT override run_event_loop;
     //    the spec is to drive timers + draw_if_needed manually.

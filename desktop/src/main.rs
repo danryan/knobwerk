@@ -58,7 +58,7 @@ fn build_audio_stream(params: Arc<Params>) -> Result<cpal::Stream, Box<dyn std::
         .into());
     }
 
-    let sample_rate = config.sample_rate.0 as f32;
+    let sample_rate = config.sample_rate as f32;
     let channels = config.channels as usize;
 
     // 250 ms single-tap delay line at the device sample rate.
